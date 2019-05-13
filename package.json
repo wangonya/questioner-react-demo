@@ -1,0 +1,28 @@
+{
+  "name": "questioner-react-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "wangonya <kwangonya@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "7.1.0",
+    "@babel/core": "7.1.0",
+    "@babel/preset-env": "7.1.0",
+    "@babel/preset-react": "7.0.0",
+    "babel-loader": "8.0.2",
+    "css-loader": "1.0.0",
+    "style-loader": "0.23.0",
+    "webpack": "4.19.1",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.3.1"
+  },
+  "dependencies": {
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.13.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "scripts": {
+      "start:dev": "webpack-dev-server"
+  }
+}
