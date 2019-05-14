@@ -31,6 +31,8 @@ class Navbar extends Component {
             <Link to="/signin/">Sign in</Link>
             <Link to="/signup/">Sign up</Link>
           </div>
+        </div>
+        <div className="container">
           <Route path="/" exact component={Home} />
           <Route path="/about/" component={About} />
           <Route path="/signup/" component={Signup} />
