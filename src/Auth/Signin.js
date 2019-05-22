@@ -2,22 +2,15 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import Loader from ".././Loader/Loader.js";
 import Toast from ".././Toast/Toast.js";
-import axios from "axios";
+import { connect } from "react-redux";
+import { signIn } from ".././redux/actions/authActions";
 
 import "./Auth.css";
 
 class Signin extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      email: "",
-      password: "",
-      loading: false,
-      error: null,
-      isSignedIn: false
-    };
-
+    this.state = { email: "", password: "", loading: false };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -30,6 +23,7 @@ class Signin extends Component {
   }
 
   handleSubmit(event) {
+    this.setState({ loading: true });
     let bodyFormData = new FormData();
     event.preventDefault();
     bodyFormData.set("email", this.state.email);
@@ -38,45 +32,21 @@ class Signin extends Component {
     bodyFormData.forEach((value, key) => {
       jsonData[key] = value;
     });
-    this.setState({
-      loading: true
-    });
-    axios
-      .post("https://questioner2.herokuapp.com/api/v2/auth/login/", jsonData)
-      .then(res => {
-        if (res.status === 200) {
-          sessionStorage.setItem("token", res.data.data[0].access_token);
-          this.setState({
-            loading: false,
-            isSignedIn: true
-          });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({
-          loading: false,
-          error: err
-        });
-        setTimeout(() => {
-          this.setState({
-            error: null
-          });
-        }, 3700);
-      });
+
+    this.props.signIn(jsonData);
   }
 
   renderLoading() {
+    if (this.props.isSignedIn) {
+      return <Redirect to="/" />;
+    }
     return <Loader />;
   }
 
   renderForm() {
-    if (this.state.isSignedIn) {
-      return <Redirect to="/" />;
-    }
     return (
       <div>
-        {this.state.error && (
+        {this.props.error && (
           <Toast type="err" message="Something went wrong" />
         )}
         <div className="auth">
@@ -126,4 +96,11 @@ class Signin extends Component {
   }
 }
 
-export default Signin;
+const mapStateToProps = state => ({
+  isSignedIn: state.auth.isSignedIn
+});
+
+export default connect(
+  mapStateToProps,
+  { signIn }
+)(Signin);
