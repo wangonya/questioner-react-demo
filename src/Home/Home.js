@@ -1,41 +1,14 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { connect } from "react-redux";
 
 import "./Home.css";
 
 import Loader from ".././Loader/Loader.js";
+import { fetchMeetups } from ".././redux/actions/meetupActions";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      meetups: [],
-      loading: true,
-      error: null
-    };
-  }
-
   componentDidMount() {
-    axios
-      .get("https://questioner2.herokuapp.com/api/v2/meetups/upcoming")
-      .then(res => {
-        const meetups = res.data.data;
-
-        // update state to trigger re-render
-        this.setState({
-          meetups,
-          loading: false,
-          error: null
-        });
-      })
-      .catch(err => {
-        // save err in state and re-render
-        this.setState({
-          loading: false,
-          error: err
-        });
-      });
+    this.props.fetchMeetups();
   }
 
   renderLoading() {
@@ -43,15 +16,15 @@ class Home extends Component {
   }
 
   renderError() {
-    return <div>Uh oh: {this.state.error.message}</div>;
+    return <div>Uh oh: {this.props.error.message}</div>;
   }
 
   renderMeetups() {
-    if (this.state.error) {
+    if (this.props.error) {
       return this.renderError();
     }
 
-    let main_meetup = this.state.meetups[0];
+    let main_meetup = this.props.meetups[0];
 
     return (
       <div className="meetups">
@@ -66,7 +39,7 @@ class Home extends Component {
             <p>{main_meetup.details}</p>
           </div>
         </div>
-        {this.state.meetups.splice(1).map(meetup => (
+        {this.props.meetups.splice(1).map(meetup => (
           <div className="grid-item featured" key={meetup.id}>
             <img src={meetup.image} alt="meetup image" />
             <div className="text-block">
@@ -85,10 +58,19 @@ class Home extends Component {
     return (
       <div className="home">
         <h2 className="title">Upcoming Meetups</h2>
-        {this.state.loading ? this.renderLoading() : this.renderMeetups()}
+        {this.props.loading ? this.renderLoading() : this.renderMeetups()}
       </div>
     );
   }
 }
 
-export default Home;
+const mapStateToProps = state => ({
+  meetups: state.meetups.meetups,
+  loading: state.meetups.loading,
+  error: state.meetups.error
+});
+
+export default connect(
+  mapStateToProps,
+  { fetchMeetups }
+)(Home);
