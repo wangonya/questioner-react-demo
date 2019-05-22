@@ -1,6 +1,8 @@
-import { SIGN_IN, SIGN_UP } from ".././actions/types";
+import { SIGN_IN } from ".././actions/types";
 
 const initialState = {
+  firstName: "",
+  lastName: "",
   email: "",
   password: "",
   loading: false,
