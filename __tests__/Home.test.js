@@ -24,4 +24,12 @@ describe("<Home /> component", () => {
     expect(getSpy).toBeCalled();
     getSpy.mockClear();
   });
+
+  test("renders error from state", () => {
+    const errWrapper = shallow(<Home />);
+    expect(errWrapper.find("div.err")).toHaveLength(0);
+    errWrapper.setState({ error: true, loading: false });
+    expect(errWrapper.state("error")).toEqual(true);
+    expect(errWrapper.find("div.err")).toHaveLength(1);
+  });
 });
