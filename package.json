@@ -16,6 +16,7 @@
     "enzyme-adapter-react-16": "^1.13.0",
     "enzyme-to-json": "^3.3.5",
     "jest": "^24.8.0",
+    "react-test-renderer": "^16.8.6",
     "style-loader": "0.23.0",
     "webpack": "4.19.1",
     "webpack-cli": "^3.3.2",

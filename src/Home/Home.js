@@ -43,7 +43,7 @@ class Home extends Component {
   }
 
   renderError() {
-    return <div>Uh oh: {this.state.error.message}</div>;
+    return <div className="err">Uh oh: something went wrong...</div>;
   }
 
   renderMeetups() {

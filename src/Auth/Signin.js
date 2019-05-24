@@ -77,7 +77,7 @@ class Signin extends Component {
     return (
       <div>
         {this.state.error && (
-          <Toast type="err" message="Something went wrong" />
+          <Toast className="err" type="err" message="Something went wrong" />
         )}
         <div className="auth">
           <form className="form" onSubmit={this.handleSubmit}>
