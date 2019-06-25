@@ -15,15 +15,7 @@ class Home extends Component {
     return <Loader />;
   }
 
-  renderError() {
-    return <div>Uh oh: {this.props.error.message}</div>;
-  }
-
   renderMeetups() {
-    if (this.props.error) {
-      return this.renderError();
-    }
-
     let main_meetup = this.props.meetups[0];
 
     return (
@@ -66,8 +58,7 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   meetups: state.meetups.meetups,
-  loading: state.meetups.loading,
-  error: state.meetups.error
+  loading: state.meetups.loading
 });
 
 export default connect(
